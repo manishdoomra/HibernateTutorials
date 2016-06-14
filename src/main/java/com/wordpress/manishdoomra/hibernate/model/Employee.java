@@ -61,6 +61,10 @@ public class Employee {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
+	public Employee(){
+		//Required by JPA, while fetching the data from DB
+	}
 
 	public Employee(int id, String name){
 		this.id = id;
@@ -78,7 +82,7 @@ public class Employee {
 	
 	@Column(name="employee_name")
 	public String getName() {
-		return name + " from getter";
+		return name;
 	}
 	public void setName(String name) {
 		this.name = name;

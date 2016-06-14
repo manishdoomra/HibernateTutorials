@@ -16,14 +16,14 @@ public class App
 {
 	private static SessionFactory sessionFactory;
 	
-	public static Session initializeDatabase(){
+	private static Session initializeDatabase(){
 		sessionFactory = new Configuration().configure().buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		
 		return session;
 	}
 	
-	public static void saveEmployeeInDB(Session session, Employee employee){
+	private static void saveEmployeeInDB(Session session, Employee employee){
 		session.beginTransaction();
 		session.save(employee);
 		session.getTransaction().commit();
@@ -42,11 +42,24 @@ public class App
 		sessionFactory.close();
 	}
 	
+	private static void fetchAnEmployeeById(int id){
+		Session fetchSession = sessionFactory.openSession();
+		Employee employeeFetchedFromDb = fetchSession.get(Employee.class, id);
+		fetchSession.close();
+		System.out.println("Employee name fetched from DB : - "+employeeFetchedFromDb.getName());
+	}
+	
+	public static void doHibernateStuff(){
+		Session session = initializeDatabase();
+		int id=1;
+		Employee employee = getEmployee(id, "Manish");
+		saveEmployeeInDB(session, employee);
+		fetchAnEmployeeById(id);
+		closeDB();
+	}
+	
 	public static void main( String[] args )
     {
-		Session session = initializeDatabase();
-		Employee employee = getEmployee(1, "Manish");
-		saveEmployeeInDB(session, employee);
-		closeDB();
+		doHibernateStuff();
     }
 }
