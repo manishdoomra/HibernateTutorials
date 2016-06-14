@@ -14,10 +14,9 @@ import javax.persistence.Id;
 @Entity(name="Employee_details")
 public class Employee {
 	
-	@Id
-	@Column(name="employee_id")
+	
 	private int id;
-	@Column(name="employee_name")
+	
 	private String name;
 	
 	public Employee(int id, String name){
@@ -25,15 +24,18 @@ public class Employee {
 		this.name = name;
 	}
 	
-	
+	@Id
+	@Column(name="employee_id")
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
+	
+	@Column(name="employee_name")
 	public String getName() {
-		return name;
+		return name + " from getter";
 	}
 	public void setName(String name) {
 		this.name = name;
