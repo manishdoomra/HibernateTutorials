@@ -1,5 +1,7 @@
 package com.wordpress.manishdoomra.hibernate;
 
+import java.util.Date;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -29,7 +31,11 @@ public class App
 	}
 	
 	private static Employee getEmployee(int id, String name){
-		return new Employee(id, name);
+		Employee employee = new Employee(id, name);
+		employee.setDateOfJoining(new Date());
+		employee.setAddress("Address of "+name);
+		employee.setDescription("description of "+name);
+		return employee;
 	}
 	
 	private static void closeDB(){
