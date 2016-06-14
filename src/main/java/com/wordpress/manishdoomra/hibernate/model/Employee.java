@@ -3,6 +3,7 @@
  */
 package com.wordpress.manishdoomra.hibernate.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -10,11 +11,13 @@ import javax.persistence.Id;
  * @author manish
  *
  */
-@Entity
+@Entity(name="Employee_details")
 public class Employee {
 	
 	@Id
+	@Column(name="employee_id")
 	private int id;
+	@Column(name="employee_name")
 	private String name;
 	
 	public Employee(int id, String name){
