@@ -26,8 +26,7 @@ public class App
 	private static void saveEmployeeInDB(Session session, Employee employee){
 		session.beginTransaction();
 		session.save(employee);
-		session.getTransaction().commit();
-		session.close();
+		session.getTransaction().commit();		
 	}
 	
 	private static Employee getEmployee(int id, String name){
@@ -38,24 +37,33 @@ public class App
 		return employee;
 	}
 	
-	private static void closeDB(){
+	private static Employee getEmployee(String name){
+		Employee employee = new Employee(name);
+		employee.setDateOfJoining(new Date());
+		employee.setAddress("Address of "+name);
+		employee.setDescription("description of "+name);
+		return employee;
+	}
+	
+	private static void closeDB(Session session){
+		session.close();
 		sessionFactory.close();
 	}
 	
-	private static void fetchAnEmployeeById(int id){
-		Session fetchSession = sessionFactory.openSession();
-		Employee employeeFetchedFromDb = fetchSession.get(Employee.class, id);
-		fetchSession.close();
+	private static void fetchAnEmployeeById(Session session, int id){
+		Employee employeeFetchedFromDb = session.get(Employee.class, id);
 		System.out.println("Employee name fetched from DB : - "+employeeFetchedFromDb.getName());
 	}
 	
 	public static void doHibernateStuff(){
 		Session session = initializeDatabase();
-		int id=1;
+		int id=2;
 		Employee employee = getEmployee(id, "Manish");
+		Employee employee1 = getEmployee("Hari Krishan");
 		saveEmployeeInDB(session, employee);
-		fetchAnEmployeeById(id);
-		closeDB();
+		saveEmployeeInDB(session, employee1);
+		fetchAnEmployeeById(session, id);
+		closeDB(session);
 	}
 	
 	public static void main( String[] args )

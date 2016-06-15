@@ -8,6 +8,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
@@ -44,7 +46,6 @@ public class Employee {
 		this.dateOfJoining = dateOfJoining;
 	}
 	
-	@Transient
 	public String getAddress() {
 		return address;
 	}
@@ -71,8 +72,13 @@ public class Employee {
 		this.name = name;
 	}
 	
+	public Employee(String name){
+		this.name = name;
+	}
+	
 	@Id
 	@Column(name="employee_id")
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	public int getId() {
 		return id;
 	}
