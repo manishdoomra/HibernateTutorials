@@ -7,6 +7,7 @@ import java.util.Date;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -32,7 +33,7 @@ public class Employee {
 	
 	private Date dateOfJoining;
 	
-	private String address;
+	private Address address;
 	
 	private String description;
 	
@@ -46,11 +47,12 @@ public class Employee {
 		this.dateOfJoining = dateOfJoining;
 	}
 	
-	public String getAddress() {
+	@Embedded
+	public Address getAddress() {
 		return address;
 	}
 
-	public void setAddress(String address) {
+	public void setAddress(Address address) {
 		this.address = address;
 	}
 	

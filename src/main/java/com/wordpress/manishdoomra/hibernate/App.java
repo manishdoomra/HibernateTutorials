@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import com.wordpress.manishdoomra.hibernate.model.Address;
 import com.wordpress.manishdoomra.hibernate.model.Employee;
 
 /**
@@ -32,7 +33,8 @@ public class App
 	private static Employee getEmployee(int id, String name){
 		Employee employee = new Employee(id, name);
 		employee.setDateOfJoining(new Date());
-		employee.setAddress("Address of "+name);
+		Address address = getAddress(name);
+		employee.setAddress(address);
 		employee.setDescription("description of "+name);
 		return employee;
 	}
@@ -40,9 +42,15 @@ public class App
 	private static Employee getEmployee(String name){
 		Employee employee = new Employee(name);
 		employee.setDateOfJoining(new Date());
-		employee.setAddress("Address of "+name);
+		Address address = getAddress(name);
+		employee.setAddress(address);
 		employee.setDescription("description of "+name);
 		return employee;
+	}
+	
+	private static Address getAddress(String name){
+		Address address = new Address("city of "+name, "state of "+name, "pinCode of "+name);
+		return address;
 	}
 	
 	private static void closeDB(Session session){
