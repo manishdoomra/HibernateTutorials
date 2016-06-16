@@ -5,18 +5,17 @@ package com.wordpress.manishdoomra.hibernate.model;
 
 import java.util.Date;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 /**
  * @author manish
@@ -27,13 +26,15 @@ import javax.persistence.Transient;
 public class Employee {
 	
 	
-	private int id;
+	private EmployeeUniqueId uniqueId;
 	
 	private String name;
 	
 	private Date dateOfJoining;
 	
-	private Address address;
+	private Address homeAddress;
+	
+	private Address officeAddress; 
 	
 	private String description;
 	
@@ -47,14 +48,6 @@ public class Employee {
 		this.dateOfJoining = dateOfJoining;
 	}
 	
-	@Embedded
-	public Address getAddress() {
-		return address;
-	}
-
-	public void setAddress(Address address) {
-		this.address = address;
-	}
 	
 	@Lob
 	public String getDescription() {
@@ -69,24 +62,44 @@ public class Employee {
 		//Required by JPA, while fetching the data from DB
 	}
 
-	public Employee(int id, String name){
-		this.id = id;
-		this.name = name;
+		
+	@Embedded
+	@AttributeOverrides({
+		@AttributeOverride(name="city", column=@Column(name="HOME_CITY")),
+		@AttributeOverride(name="state", column=@Column(name="HOME_STATE")),
+		@AttributeOverride(name="pinCode", column=@Column(name="HOME_PINCODE"))
+	})
+	public Address getHomeAddress() {
+		return homeAddress;
+	}
+
+	public void setHomeAddress(Address homeAddress) {
+		this.homeAddress = homeAddress;
 	}
 	
+	@Embedded
+	@AttributeOverrides({
+		@AttributeOverride(name="city", column=@Column(name="OFFICE_CITY")),
+		@AttributeOverride(name="state", column=@Column(name="OFFICE_STATE")),
+		@AttributeOverride(name="pinCode", column=@Column(name="OFFICE_PINCODE"))
+	})
+	public Address getOfficeAddress() {
+		return officeAddress;
+	}
+
+	public void setOfficeAddress(Address officeAddress) {
+		this.officeAddress = officeAddress;
+	}
+
 	public Employee(String name){
 		this.name = name;
 	}
 	
-	@Id
-	@Column(name="employee_id")
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	public int getId() {
-		return id;
+	public Employee(String name, EmployeeUniqueId uniqueId){
+		this.name = name;
+		this.uniqueId = uniqueId;
 	}
-	public void setId(int id) {
-		this.id = id;
-	}
+	
 	
 	@Column(name="employee_name")
 	public String getName() {
@@ -96,5 +109,13 @@ public class Employee {
 		this.name = name;
 	}
 	
+	@EmbeddedId
+	public EmployeeUniqueId getUniqueId() {
+		return uniqueId;
+	}
+
+	public void setUniqueId(EmployeeUniqueId uniqueId) {
+		this.uniqueId = uniqueId;
+	}
 
 }

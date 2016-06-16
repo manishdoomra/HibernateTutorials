@@ -1,9 +1,11 @@
 package com.wordpress.manishdoomra.hibernate.model;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
 public class Address {
+	
 	
 	private String city;
 	private String state;
@@ -19,6 +21,7 @@ public class Address {
 		this.pinCode = pinCode;
 	}
 
+	@Column(name="CITY_NAME")
 	public String getCity() {
 		return city;
 	}
@@ -26,7 +29,8 @@ public class Address {
 	public void setCity(String city) {
 		this.city = city;
 	}
-
+	
+	@Column(name="STATE_NAME")
 	public String getState() {
 		return state;
 	}
@@ -35,6 +39,7 @@ public class Address {
 		this.state = state;
 	}
 
+	@Column(name="PINCODE")
 	public String getPinCode() {
 		return pinCode;
 	}
