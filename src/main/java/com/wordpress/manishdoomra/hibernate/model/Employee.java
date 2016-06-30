@@ -4,11 +4,14 @@
 package com.wordpress.manishdoomra.hibernate.model;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -38,6 +41,8 @@ public class Employee {
 	
 	private String description;
 	
+	private Set<String> alternateContactNumbers = new HashSet<String>();
+	
 	@Basic
 	@Temporal(TemporalType.DATE)
 	public Date getDateOfJoining() {
@@ -58,6 +63,15 @@ public class Employee {
 		this.description = description;
 	}
 	
+	@ElementCollection	
+	public Set<String> getAlternateContactNumbers() {
+		return alternateContactNumbers;
+	}
+
+	public void setAlternateContactNumbers(Set<String> alternateContactNumbers) {
+		this.alternateContactNumbers = alternateContactNumbers;
+	}
+
 	public Employee(){
 		//Required by JPA, while fetching the data from DB
 	}

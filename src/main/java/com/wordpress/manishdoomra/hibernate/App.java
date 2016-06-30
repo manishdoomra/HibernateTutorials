@@ -1,6 +1,8 @@
 package com.wordpress.manishdoomra.hibernate;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -44,6 +46,7 @@ public class App
 	
 	private static Employee getEmployee(String name, String email, String mobile){
 		Employee employee = new Employee(name, new EmployeeUniqueId(email, mobile));
+		employee.getAlternateContactNumbers().add("+91-9823511884");
 		employee.setDateOfJoining(new Date());
 		Address address = getHomeAddress(name);
 		Address offcAddress = getOfficeAddress(name);
